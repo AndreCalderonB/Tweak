@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const authRouter = require('./routes/auth-routes')
 
 const app = express()
-const apiPort = 3000
+const apiPort = 5000
 
 
 
