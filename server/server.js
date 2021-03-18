@@ -3,7 +3,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-
+const sportRouter = require('./routes/sport-route')
+const testRouter = require('./routes/test-route')
 const authRouter = require('./routes/auth-routes')
 
 const app = express()
@@ -30,5 +31,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api', authRouter)
+app.use('/sports', sportRouter)
+app.use('/test', testRouter)
 
 app.listen(apiPort, () => console.log(`Listening on port: ${apiPort}`))
