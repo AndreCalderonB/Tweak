@@ -1,10 +1,18 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {Link} from 'react-router-dom'
 import {FaSearch,FaBars,FaTimes,FaSignOutAlt, FaUserAstronaut, FaHome, FaUserAlt, FaTachometerAlt, FaChartArea, FaCogs} from 'react-icons/fa'
+import UserContext from '../../providers/userContext'
 
 function WebAppLayout(props) {
     
-    const [click,setclick] = useState(false);
+    const [click,setclick] = useState(false)
+    const {loginState, userState, searchState} = useContext(UserContext)
+    const [loggedIn, setLoggedIn] = loginState
+    const [userSearchID, setUserSearchID] =  searchState
+    const [user] = userState
+    const signOut = () => {
+        setLoggedIn(false);
+    }
 
     const toggleClick = () =>{
         if(window.innerWidth < 500){
@@ -60,7 +68,7 @@ function WebAppLayout(props) {
                                     </div>
                                 </div>
                                 <div className="col-4 my-auto d-inline">        
-                                <Link to="/profile" onClick={toggleClick}>Perfil</Link>
+                                    <Link to={{ pathname:'/profile', id:user._id }} onClick={()=>{toggleClick(); setUserSearchID(user._id)}}>Perfil</Link>
                                 </div>
                             </div>
                         </li>
@@ -117,10 +125,8 @@ function WebAppLayout(props) {
                             </div>
                             <div className="userInfo col-s-0 col-md-5 col-lg-3 ml-auto my-auto d-inline justify-content-end p-0"> 
                                 <FaUserAstronaut className="icon d-inline align-self-end mx-2" size={20}/>
-                                <p className="top-bar-user d-inline align-self-end mx-2">Nombre de Usuario</p>
-                                <Link to="/login">
-                                    <FaSignOutAlt className="icon d-inline align-self-end mx-2" size={20}/>
-                                </Link>
+                                <p className="top-bar-user d-inline align-self-end mx-2">{user.name}</p>
+                                    <FaSignOutAlt onClick={signOut} className="icon d-inline align-self-end mx-2" size={20}/>
                                 
                             </div>
                         </div>

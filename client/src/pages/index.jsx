@@ -4,7 +4,8 @@ import Dashboard from './Dashboard'
 import Home from './Home'
 import AboutUsPage from './AboutUsPage'
 import ContactPage from './ContactPage'
-
+import Profile from './Profile'
+import Users from './Users'
 export{
     Home,
     AboutUsPage,
@@ -12,4 +13,6 @@ export{
     Login,
     UserRegister,
     Dashboard,
+    Profile,
+    Users
 }

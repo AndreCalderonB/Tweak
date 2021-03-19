@@ -7,7 +7,7 @@ import { Redirect } from 'react-router'
 function Dashboard() {
 
     const jwt = api.getSession();
-    console.log(jwt);
+
     if(jwt != null){
         return (
             <div className="pt-4">

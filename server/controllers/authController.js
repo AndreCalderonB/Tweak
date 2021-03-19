@@ -180,14 +180,20 @@ exports.loginHandle = async (req, res) => {
 
     const user = await User.findOne({email: req.body.email});
 
-    if(!user) return res.status(400).send('Correo y/o Contraseña Incorrecta');
+    if(!user) return res.status(400).send('Correo no registrado');
 
     const validPass = await bcryptjs.compare(req.body.password,user.password);
 
     if(!validPass) return res.status(400).send('Correo y/o Contraseña Incorrecta');
 
-    const token = jwt.sign({_id: user._id}, 'IADGUAIJSDGNA')
+    const token = jwt.sign({_id: user._id}, 'IADGUAIJSDGNA',{
+        expiresIn: 120
+    })
 
-    console.log(token)
-    res.send(token);
+    const UserInfo = {
+        _id: user._id,
+        name: user.name,
+        email: user.email
+    }
+    res.send({token, UserInfo});
 }

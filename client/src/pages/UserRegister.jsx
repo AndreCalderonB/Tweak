@@ -8,7 +8,6 @@ function UserRegister() {
         e.preventDefault();
         const {name, email, password, password2 } = postData;
         const payload = {name, email, password, password2}
-        console.log(payload)
         await api.registerUser(payload).then(res=>{
             window.alert('Consulta tu correo para activar tu cuenta :)')
         })

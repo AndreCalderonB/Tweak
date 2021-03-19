@@ -5,14 +5,7 @@ import Packages from '../components/WebPage//Packages'
 import {Link} from 'react-router-dom'
 
 function Home() {
-    const load = () => {
-        console.log("Loaded")
-    }
-    const handleScroll = () => {
-        console.log("Scrolled");
-    }
-    load()
-    window.addEventListener('scroll', handleScroll);
+
     return (
         <>
             <div className="jumbotron jumbotron-index jumbotron-fluid mb-0">

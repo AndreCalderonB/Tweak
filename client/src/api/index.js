@@ -1,10 +1,11 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
+
 
 const api = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: 'http://localhost:5000/',
 })
 
+//  MANEJO DE TOKENS
 export const setSession = (value) => {
     /*Cookies.set('__session',value)*/
     localStorage.setItem('__session',value)
@@ -12,7 +13,7 @@ export const setSession = (value) => {
 
 export const getSession = () => {
     const jwt = localStorage.getItem('__session')
-    console.log(jwt)
+
     let session
     try {
         if (jwt != null) {
@@ -23,17 +24,22 @@ export const getSession = () => {
       } catch (error) {
         console.log(error)
       }
-      
+      console.log("Session id")
+      console.log(session._id)
     return session
 }
 
 export const logOut = () => {
     localStorage.removeItem('__session')
 }
+// ------------------------
+export const userLogin = payload => api.post('api/user/login', payload);
 
-export const userLogin = payload => api.post('/user/login', payload);
+export const registerUser = payload => api.post('api/user', payload);
 
-export const registerUser = payload => api.post('/user', payload);
+export const showUser = payload => api.get('user/show/'+payload);
+
+export const getUsers = payload => api.get('user/index/'+payload)
 
 const apis = {
     setSession,
@@ -41,6 +47,8 @@ const apis = {
     logOut,
     userLogin,
     registerUser,
+    showUser,
+    getUsers
 }
 
 export default apis

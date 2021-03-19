@@ -1,14 +1,14 @@
-import React, {useState} from 'react'
-import {Link, useHistory, Redirect} from 'react-router-dom'
+import React, {useState, useContext} from 'react'
+import {Link, Redirect} from 'react-router-dom'
 import api from '../api'
+import UserContext from '../providers/userContext'
 
 function Login() {
 
+    const {loginState, userState} = useContext(UserContext);
+    const [loggedIn, setLoggedIn] = loginState;
+    const [user,setUser] = userState;
     const [postData, setPostData] = useState({ email: '', password: ''});
-
-    const [loginCompleted, setLoginCompleted] = useState(false);
-
-    let history = useHistory();
 
     const handleSubmit = async(e) => {
 
@@ -17,12 +17,14 @@ function Login() {
         const payload = {email, password }
 
         await api.userLogin(payload).then(res=>{
-            api.setSession(res.data);
+            api.setSession(res.data.token);
+            setUser(res.data.UserInfo)
+            
         })
-        setLoginCompleted(true);
+        setLoggedIn(true)
     }
 
-    if(loginCompleted){
+    if(loggedIn){
         return <Redirect to="/dashboard" />
     }else{
         return (
