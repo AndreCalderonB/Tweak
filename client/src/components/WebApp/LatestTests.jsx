@@ -8,8 +8,9 @@ function LatestTests() {
                     <div className="col-3 col-md-1">
                         <span className="svg-container"><FaClock className="svg blue" size={45} /></span>
                     </div>
-                    <div className="col"><h2 className="webapp-card-title h-100">Últimas Pruebas</h2></div>
-                    
+                    <div className="col">
+                        <h2 className="webapp-card-title h-100">Últimas Pruebas</h2>
+                    </div>
                 </div>
                 <hr/>
                 <div className="row py-3 justify-content-center">

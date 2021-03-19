@@ -5,7 +5,8 @@ import ScrollToTop from '../components/ScrollToTop';
 import RouteWithLayout from '../components/RouteWithLayout';
 import Layout from '../components/WebPage/Layout';
 import WebAppLayout from '../components/WebApp/WebAppLayout';
-import {UserRegister, Login, Dashboard, Home, AboutUsPage, ContactPage, Profile, Users} from '../pages'
+import WelcomePageLayout from '../components/WebApp/WelcomePageLayout';
+import {UserRegister, Login, WelcomePage, Dashboard, Home, AboutUsPage, ContactPage, Profile, Users} from '../pages'
 import ProtectedRouteWithLayout from '../components/ProtectedRouteWithLayout';
 import UserContext from '../providers/userContext'
 
@@ -33,6 +34,7 @@ function App() {
           <ProtectedRouteWithLayout path="/dashboard" exact layout={WebAppLayout} component={Dashboard} />
           <ProtectedRouteWithLayout path="/profile" exact layout={WebAppLayout} component={()=> <Profile id={userSearchID} />} />
           <ProtectedRouteWithLayout path="/users" exact layout={WebAppLayout} component={Users} />
+          <ProtectedRouteWithLayout path="/welcome" exact layout={WelcomePageLayout} component={WelcomePage} />
       </Switch>
     </Router>
     </UserContext.Provider>

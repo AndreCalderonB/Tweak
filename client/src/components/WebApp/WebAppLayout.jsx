@@ -13,7 +13,7 @@ function WebAppLayout(props) {
     const signOut = () => {
         setLoggedIn(false);
     }
-
+   
     const toggleClick = () =>{
         if(window.innerWidth < 500){
         setclick(!click);
@@ -127,7 +127,7 @@ function WebAppLayout(props) {
                                 <FaUserAstronaut className="icon d-inline align-self-end mx-2" size={20}/>
                                 <p className="top-bar-user d-inline align-self-end mx-2">{user.name}</p>
                                     <FaSignOutAlt onClick={signOut} className="icon d-inline align-self-end mx-2" size={20}/>
-                                
+                                    
                             </div>
                         </div>
                     </div>

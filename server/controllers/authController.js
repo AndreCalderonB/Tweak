@@ -193,7 +193,8 @@ exports.loginHandle = async (req, res) => {
     const UserInfo = {
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        completedRegistration : user.completedRegistration,
     }
     res.send({token, UserInfo});
 }
