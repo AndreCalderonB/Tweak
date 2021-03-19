@@ -6,12 +6,13 @@ const api = axios.create({
 })
 
 export const setSession = (value) => {
-    Cookies.set('__session',value)
+    /*Cookies.set('__session',value)*/
+    localStorage.setItem('__session',value)
 }
 
 export const getSession = () => {
-    const jwt = Cookies.get('__session')
-    
+    const jwt = localStorage.getItem('__session')
+    console.log(jwt)
     let session
     try {
         if (jwt != null) {
@@ -23,12 +24,11 @@ export const getSession = () => {
         console.log(error)
       }
       
-      console.log(session)
-      
     return session
 }
+
 export const logOut = () => {
-    Cookies.remove('__session')
+    localStorage.removeItem('__session')
 }
 
 export const userLogin = payload => api.post('/user/login', payload);

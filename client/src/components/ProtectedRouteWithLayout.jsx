@@ -1,17 +1,21 @@
 import React from 'react'
+import { Redirect } from 'react-router'
+import api from '../api'
 
 function ProtectedRouteWithLayout(props) {
+
     const jwt = api.getSession();
-    console.log(jwt);
+
     if(jwt != null){
         return <Redirect to="/login" />
-    }else{
-        return (
-            <props.layout>
-                <props.component />
-            </props.layout>
-        )
     }
+    
+    return (
+        <props.layout>
+            <props.component />
+        </props.layout>
+    )
+    
 
 }
 
