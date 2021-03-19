@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Link, useHistory} from 'react-router-dom'
+import {Link, useHistory, Redirect} from 'react-router-dom'
 import api from '../api'
 
 function Login() {
@@ -7,23 +7,25 @@ function Login() {
     
     const [postData, setPostData] = useState({ email: '', password: ''});
 
+    const [loginCompleted, setLoginCompleted] = useState(false);
+
     let history = useHistory();
 
-    useEffect(()=>{
-        api.logOut()
-    })
     const handleSubmit = async(e) => {
 
         e.preventDefault();
         const {email, password } = postData;
         const payload = {email, password }
-        console.log(payload)
+
         await api.userLogin(payload).then(res=>{
             api.setSession(res.data);
-            api.getSession();
         })
-        let url = '/dashboard';
-        return history.push(url);
+
+        setLoginCompleted(true);
+    }
+
+    if(loginCompleted){
+        return <Redirect to="/dashboard" />
     }
 
     return (
@@ -50,7 +52,7 @@ function Login() {
                         <a className="login-link centered" href="/">Olvidé mi contraseña</a>
                     </div>
                     <div className="row">
-                        <Link className="login-link centered" to="/registro">Registrarme</Link>
+                        <Link className="login-link centered" to="/register">Registrarme</Link>
                     </div>
                    
                 </form>
