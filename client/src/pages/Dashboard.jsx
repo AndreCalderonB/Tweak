@@ -6,21 +6,16 @@ import api from '../api'
 import { Redirect } from 'react-router'
 function Dashboard() {
 
-    const jwt = api.getSession();
-    console.log(jwt);
-    if(jwt != null){
-        return (
-            <div className="pt-4">
-                <RecentActivity />
-                <br/>
-                <LatestTests />
-                <br/>
-                <Stats />
-            </div>
-        )
-    }else{
-        return <Redirect to="/login" />
-    }
+    return (
+        <div className="pt-4">
+            <RecentActivity />
+            <br/>
+            <LatestTests />
+            <br/>
+            <Stats />
+        </div>
+    )
+    
 }
 
 export default Dashboard
