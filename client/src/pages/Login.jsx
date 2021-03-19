@@ -23,8 +23,7 @@ function Login() {
     }
 
     if(loginCompleted){
-        let url = "/dashboard"
-        return history.push(url)
+        return <Redirect to="/dashboard" />
     }else{
         return (
         
