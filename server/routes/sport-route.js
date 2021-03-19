@@ -1,14 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Sports = require('../models/Sports');
+const Test = require('../models/Test');
 const sportRouter = express.Router();
 
 sportRouter.use(express.json());
 
 sportRouter.route('/')
 .get((req,res,next) => {
+
     Sports.find({})
-    .populate('test.testSportSchema')
+    .populate('test')
     .then((sport) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -75,7 +77,7 @@ sportRouter.route('/:sportId')
     .catch((err) => next(err));
 });
 
-sportRouter.route('/:sportId/typeSport')
+sportRouter.route('/:sportId/testSport')
 .get((req,res,next) => {
     Sports.findById(req.params.sportId)
     .then((sport) => {
@@ -96,12 +98,15 @@ sportRouter.route('/:sportId/typeSport')
     Sports.findById(req.params.sportId)
     .then((sport) => {
         if (sport != null) {
-            sport.typeSport.push(req.body);
-            sport.save()
-            .then((sport) => {
+            Test.create(req.body)
+            .then((test) => {
+                console.log(test);
+                sport.test.push(test);
+                console.log(sport)
+                sport.save()
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(sport);                
+                res.json(test);                
             }, (err) => next(err));
         }
         else {

@@ -23,10 +23,10 @@ const SportSchema = new mongoose.Schema({
     type: [typeSportSchema],
     required: true
   },
-  test: [ {
+  test: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Test'
-  } ]
+  }]
 }, { timestamps: true });
 
 
