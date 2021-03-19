@@ -9,12 +9,8 @@ function ProtectedRouteWithLayout(props) {
     const [loggedIn] = loginState
 
     const jwt = api.getSession();
-<<<<<<< HEAD
-    if(jwt === null || (loggedIn === false)){
-=======
 
-    if(jwt === null){
->>>>>>> 53f62a65fe1551dc38909bf727e64d0bb12621a0
+    if(jwt === null || (loggedIn === false)){
         return <Redirect to="/login" />
     }else{
         return (
