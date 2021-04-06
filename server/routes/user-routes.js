@@ -62,9 +62,39 @@ userRouter.route('/:userId/follow/:followerId')
     .then((user) => {
         User.findOne({_id: req.params.followerId})
         .then((follower) => {
-            if(user.following.includes(follower)){
+            if(!user.following.includes(follower)){
                 user.following.push(follower);
                 follower.followers.push(user);
+                user.save();
+                follower.save();
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(user);
+            }else{
+                err = new Error('You already follow that user');
+                err.status = 401;
+                return next(err);
+            }
+        })  
+    }, (err) => next(err))
+    .catch((err) => next(err));
+})
+.delete((req, res, next) => {
+    User.findOne({_id: req.params.userId})
+    .then((user) => {
+        User.findOne({_id: req.params.followerId})
+        .then((follower) => {
+            if(!user.following.includes(follower)){
+                for(var i=0; i<user.following.length; i++){
+                    if(JSON.stringify(user.following[i]) === JSON.stringify(follower._id)){
+                        user.following.splice(i,1)
+                    }
+                }
+                for(var i=0; i<follower.followers.length; i++){
+                    if(JSON.stringify(follower.followers[i]) === JSON.stringify(user._id)){
+                        follower.followers.splice(i,1)
+                    }
+                }
                 user.save();
                 follower.save();
                 res.statusCode = 200;
