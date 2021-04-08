@@ -7,7 +7,6 @@ const userController = require('../controllers/userController');
 const { Error } = require('mongoose');
 
 userRouter.use(express.json());
-
 //Show All
 userRouter.get('/index/:id', userController.showAllHandle);
 

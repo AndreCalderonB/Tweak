@@ -7,6 +7,10 @@ const sportRouter = require('./routes/sport-route')
 const testRouter = require('./routes/test-route')
 const authRouter = require('./routes/auth-routes')
 const userRouter = require('./routes/user-routes')
+const teamRouter = require('./routes/team-router')
+const coachRouter = require('./routes/coach-router')
+const invitationRouter = require('./routes/invitation-router')
+
 
 const app = express()
 const apiPort = 5000
@@ -35,5 +39,8 @@ app.use('/api', authRouter)
 app.use('/sports', sportRouter)
 app.use('/test', testRouter)
 app.use('/user', userRouter)
+app.use('/coach', coachRouter)
+app.use('/team', teamRouter)
+app.use('/invitation', invitationRouter)
 
 app.listen(apiPort, () => console.log(`Listening on port: ${apiPort}`))
