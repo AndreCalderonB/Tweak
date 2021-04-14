@@ -5,9 +5,11 @@ import MultiLineChart from './MultiLineChart'
 import TestImg from '../../assets/img/TestImg.png'
 import CoachImg from '../../assets/img/CoachImg.png'
 
-function BioCard() {
+function BioCard(props) {
     return (
         <div className="webapp-card">
+            {/*
+            
             <div className="row align-items-center ml-0">
                 <div className="col-12 col-md-12"><h2 className=" h-100">Entrenadores</h2></div>
                 <div className="row px-5 py-3">
@@ -55,19 +57,20 @@ function BioCard() {
 
             </div>
             <hr/>
+            */}
             <div className="row my-auto align-items-center ml-0">
                 <div className="col-12 col-md-12">
-                    <h2 className="h-100">Biografía</h2>
+                    <h2 className="h-100">Bio</h2>
                 </div>
                 <div className="row">
                     <div className="col-12 col-md-6">
                         <div className="container p-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec nec cursus cras amet, quam auctor tortor imperdiet. Tortor felis eget gravida ut a, nisi, lectus. Nullam orci donec tincidunt turpis ligula morbi ultrices ut sagittis. Nulla eleifend ultricies enim consectetur.
+                        {props.userInfo.details.bio}
                         </div>
                     </div>
                     <div className="col-12 col-md-6 pr-0">
                         <h3 className="webapp-section-title">Highlights</h3>
-                        <Highlights />
+                        {/*<Highlights />*/}
                     </div>
                 </div>
             </div>

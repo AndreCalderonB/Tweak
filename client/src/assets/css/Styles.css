@@ -276,12 +276,15 @@ body {
     color:white;
     outline: none;
 }
-.contact-button:focus {
+.contact-button:hover {
     border:none !important;
     outline: none;
-    transform: scale(1.1);
+    transform: scale(1.05);
     transition: 0.1s ease-in-out;
 
+}
+.contact-button:focus {
+    outline:none;
 }
 .jumbotron-about-us{
     min-height: 300px;

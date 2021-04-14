@@ -1,6 +1,5 @@
 import React, {useState, useContext} from 'react'
-import {Link} from 'react-router-dom'
-import {FaSearch,FaBars,FaTimes,FaSignOutAlt, FaUserAstronaut, FaHome, FaUserAlt, FaTachometerAlt, FaChartArea, FaCogs} from 'react-icons/fa'
+import {FaBars,FaTimes,FaSignOutAlt, FaUserAstronaut} from 'react-icons/fa'
 import UserContext from '../../providers/userContext'
 
 function WelcomePageLayout(props) {
@@ -8,7 +7,7 @@ function WelcomePageLayout(props) {
     const [click,setclick] = useState(false)
     const {loginState, userState, searchState} = useContext(UserContext)
     const [loggedIn, setLoggedIn] = loginState
-    const [userSearchID, setUserSearchID] =  searchState
+
     const [user] = userState
     const signOut = () => {
         setLoggedIn(false);

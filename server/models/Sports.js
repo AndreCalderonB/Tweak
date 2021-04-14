@@ -23,6 +23,10 @@ const SportSchema = new mongoose.Schema({
     type: [typeSportSchema],
     required: true
   },
+  positions:{
+    type:[String],
+    required:true
+  },
   test: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Test'

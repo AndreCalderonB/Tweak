@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
-
+const Sport  = require('../models/Sports');
 const userRouter = express.Router();
 
 const userController = require('../controllers/userController');
@@ -36,23 +36,40 @@ userRouter.route('/details/:userId')
     .then((user) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.json(user.details);
+        res.json(user);
     }, (err) => next(err))
     .catch((err) => next(err));
 })
 .post((req, res, next) => {
-    User.findOne(req.params.id)
+    User.findOne({_id: req.params.userId})
     .then((user) => {
+        console.log(req.body)
         if(req.body != null){
-            const details = req.body;
-            user.details = details;
-            user.save();
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.json(user);
+            Sport.findOne({name:req.body.sport}).then(sport => {
+                req.body.sport = sport._id
+                console.log(req.body)
+                const details = req.body
+                console.log(details)
+                
+                user.details = details
+                user.completedRegistration = true
+                console.log(user)
+                
+                user.save().then(details =>{
+                    console.log("Saved!")
+                });
+                /*
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(user);
+                */
+            }, (err) => next(err))
+            .catch((err) => next(err));
+
         }
     }, (err) => next(err))
     .catch((err) => next(err));
+    
 })
 
 //Follow user
@@ -62,9 +79,10 @@ userRouter.route('/:userId/follow/:followerId')
     .then((user) => {
         User.findOne({_id: req.params.followerId})
         .then((follower) => {
-            if(user.following.includes(follower)){
-                user.following.push(follower);
-                follower.followers.push(user);
+            console.log(follower.following.includes(user._id))
+            if(!follower.following.includes(user._id)){
+                follower.following.push(user._id);
+                user.followers.push(follower._id);
                 user.save();
                 follower.save();
                 res.statusCode = 200;

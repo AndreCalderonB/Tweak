@@ -17,7 +17,8 @@ function Login() {
         const payload = {email, password }
 
         await api.userLogin(payload).then(res=>{
-            api.setSession(res.data.token);
+            api.setSession(res.data.newToken, res.data.UserInfo._id);
+            console.log(res.data.UserInfo)
             setUser(res.data.UserInfo)
             
         })

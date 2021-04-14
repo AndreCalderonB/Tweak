@@ -8,9 +8,10 @@ const JWT_KEY = "jwtactive987";
 const JWT_RESET_KEY = "jwtreset987";
 
 const User = require('../models/User');
+const Token = require('../models/Tokens');
 
 exports.registerHandle = (req, res) => {
-    console.log(req.body);
+    
     const { name, email, password, password2 } = req.body;
 
     let errors = [];
@@ -48,15 +49,7 @@ exports.registerHandle = (req, res) => {
             if (user) {
                 //------------ User already exists ------------//
                 errors.push({ msg: 'Email ID already registered' });
-                /*
-                res.render('http://localhost:3000/register', {
-                    errors,
-                    name,
-                    email,
-                    password,
-                    password2
-                });
-                */
+
                 res.send(errors);
             } else {
 
@@ -105,18 +98,22 @@ exports.registerHandle = (req, res) => {
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
                         console.log(error);
+                        /*
                         req.flash(
                             'error_msg',
                             'Something went wrong on our end. Please register again.'
                         );
+                        */
                         res.send(error);
                     }
                     else {
                         console.log('Mail sent : %s', info.response);
+                        /*
                         req.flash(
                             'success_msg',
                             'Activation link sent to email ID. Please activate to log in.'
                         );
+                        */
                         res.send('Success');
                     }
                 })
@@ -155,10 +152,12 @@ exports.activateHandle = (req, res) => {
                                 newUser
                                     .save()
                                     .then(user => {
+                                        /*
                                         req.flash(
                                             'success_msg',
                                             'Account activated. You can now log in.'
                                         );
+                                        */
                                         res.send('Account activated!');
                                     })
                                     .catch(err => console.log(err));
@@ -186,15 +185,28 @@ exports.loginHandle = async (req, res) => {
 
     if(!validPass) return res.status(400).send('Correo y/o Contraseña Incorrecta');
 
-    const token = jwt.sign({_id: user._id}, 'IADGUAIJSDGNA',{
-        expiresIn: 120
-    })
+    if(Token.findOne({userID:user._id})){
+        Token.deleteOne({userID:user._id}).then(console.log("Token deleted!"))
+    }
+
+    const newToken = jwt.sign({_id: user._id}, 'IADGUAIJSDGNA');
 
     const UserInfo = {
         _id: user._id,
         name: user.name,
         email: user.email,
         completedRegistration : user.completedRegistration,
-    }
-    res.send({token, UserInfo});
+        following : user.following,
+        followers : user.followers
+    };
+    console.log(UserInfo)
+    const minutes = 30
+    const token = new Token({
+        token:newToken,
+        userID: user._id,
+        expirationDate: Date.now() + minutes*60000
+    });
+    console.log(newToken)
+    token.save().then(console.log("Success")).catch(error=>console.log(error))
+    res.send({newToken, UserInfo});
 }

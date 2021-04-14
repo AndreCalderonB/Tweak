@@ -6,9 +6,8 @@ const sportRouter = express.Router();
 
 sportRouter.use(express.json());
 
-sportRouter.route('/')
+sportRouter.route('/')  
 .get((req,res,next) => {
-
     Sports.find({})
     .populate('test')
     .then((sport) => {

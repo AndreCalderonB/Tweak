@@ -13,13 +13,13 @@ const detailSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  mainSport: {
+  sport: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Sport'
   },
   team: {
     type: String,
-    required: true
+    required: false
   },
   position: {
     type: String,
@@ -28,11 +28,11 @@ const detailSchema = new mongoose.Schema({
   localization: {
     state: {
       type: String,
-      required: true
+      required: false
     },
     country: {
       type: String,
-      required: true
+      required: false
     }
   }
 })
@@ -58,6 +58,10 @@ const UserSchema = new mongoose.Schema({
   completedRegistration:{
     type:Boolean,
     default: false
+  },
+  role:{
+    type:String,
+    required:false
   },
   resetLink: {
     type: String,

@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {BrowserRouter as Router, Switch} from 'react-router-dom';
 import '../assets/css/Styles.css';
 import ScrollToTop from '../components/ScrollToTop';
@@ -9,6 +9,7 @@ import WelcomePageLayout from '../components/WebApp/WelcomePageLayout';
 import {UserRegister, Login, WelcomePage, Dashboard, Home, AboutUsPage, ContactPage, Profile, Users} from '../pages'
 import ProtectedRouteWithLayout from '../components/ProtectedRouteWithLayout';
 import UserContext from '../providers/userContext'
+import api from '../api'
 
 function App() {
 
@@ -17,7 +18,17 @@ function App() {
   const [userSearchID, setUserSearchID] = useState("");
  
   //----- TO DO: VERIFICAR JWT EN RELOAD -------
-
+  useEffect(() => {
+    const checkSession = async () =>{
+      const jwt = await api.getSession();
+      if(jwt.data.msg === "Success"){
+          console.log("Success")
+          setUser(jwt.data.UserInfo)
+          setLoggedIn(true)
+      }
+  }
+  checkSession()
+  }, []);
   return (
     <UserContext.Provider 
     value={{  loginState: [loggedIn, setLoggedIn], userState: [user, setUser] ,searchState: [userSearchID, setUserSearchID] }}>
@@ -35,6 +46,8 @@ function App() {
           <ProtectedRouteWithLayout path="/profile" exact layout={WebAppLayout} component={()=> <Profile id={userSearchID} />} />
           <ProtectedRouteWithLayout path="/users" exact layout={WebAppLayout} component={Users} />
           <ProtectedRouteWithLayout path="/welcome" exact layout={WelcomePageLayout} component={WelcomePage} />
+          {/*     RUTAS ADMIN             */}
+          <ProtectedRouteWithLayout path="/admin/dashboard" exact layout={WebAppLayout} component={Dashboard} />
       </Switch>
     </Router>
     </UserContext.Provider>

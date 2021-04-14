@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react'
 import {Link} from 'react-router-dom'
 import {FaSearch,FaBars,FaTimes,FaSignOutAlt, FaUserAstronaut, FaHome, FaUserAlt, FaTachometerAlt, FaChartArea, FaCogs} from 'react-icons/fa'
 import UserContext from '../../providers/userContext'
+import api from '../../api'
 
 function WebAppLayout(props) {
     
@@ -12,6 +13,7 @@ function WebAppLayout(props) {
     const [user] = userState
     const signOut = () => {
         setLoggedIn(false);
+        api.logOut()
     }
    
     const toggleClick = () =>{

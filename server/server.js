@@ -7,6 +7,7 @@ const sportRouter = require('./routes/sport-route')
 const testRouter = require('./routes/test-route')
 const authRouter = require('./routes/auth-routes')
 const userRouter = require('./routes/user-routes')
+const tokenRouter = require('./routes/token-routes')
 
 const app = express()
 const apiPort = 5000
@@ -32,6 +33,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api', authRouter)
+app.use('/token', tokenRouter)
 app.use('/sports', sportRouter)
 app.use('/test', testRouter)
 app.use('/user', userRouter)

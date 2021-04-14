@@ -1,26 +1,28 @@
 import React, {useEffect, useState} from 'react'
 import ProfileCard from '../components/WebApp/ProfileCard'
-import {useParams} from 'react-router-dom'
 import Bio from '../components/WebApp/BioCard'
 import api from '../api'
 function Profile(props) {
 
     const[loading, setLoading] = useState(true)
-
     const[userInfo, setUserInfo] = useState(null)
+    const[userSport, setUserSport] = useState("")
     const payload = props.id
     
-
-
     useEffect(() => {
-        const getUser = async () =>{
-            const user = await api.showUser(payload)
-            console.log(user.data)
-            setUserInfo(user.data)
-            setLoading(false)
+        const getUser = async() =>{
+            await api.showUser(payload).then(res => {
+                console.log(res.data)
+                setUserInfo(res.data.userInfo)
+                setUserSport(res.data.sportName)
+                setLoading(false)
+            })
+
         }
         getUser()
-    },[payload]);
+        
+    },[payload])
+
     if (loading){
         return (
             <div className="pt-4 pb-5">
@@ -30,11 +32,9 @@ function Profile(props) {
     }else{
         return (
             <div className="pt-4 pb-5">
-                <ProfileCard name={userInfo.name} email={userInfo.email} />
+                <ProfileCard userInfo={userInfo} sport={userSport} />
                 <br/>
-                {/*
-                <Bio />
-                */}
+                <Bio userInfo={userInfo} />
             </div>
         )
     }
